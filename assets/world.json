@@ -1,0 +1,31 @@
+{
+  "about": "Built-in World Bible entries for Suxyland (places, factions, lore). Seeded into every browser like party.json; bump an entry's version to push changes. Link to another built-in entry with <a class=\"mention\" data-key=\"its-key\">Name</a>. An optional \"pin\" adds a linked pin to the bundled Suxyland map (x, y in Azgaar map units).",
+  "entries": [
+    {
+      "key": "parniatus",
+      "version": 3,
+      "title": "Parniatus",
+      "type": "Settlement",
+      "overview": "<p>A large, circular city built on top of <a class=\"mention\" data-key=\"the-wall\">The Wall</a>, the mile-high wall that divides <a class=\"mention\" data-key=\"the-wastes\">The Wastes</a> from the rest of the mainland. It stands on the Wall's northwestern stretch, a full mile above the ground on either side.</p>",
+      "secrets": "",
+      "pin": { "map": "bundled:suxyland", "x": 293.33, "y": 246.7, "icon": "🏘️", "color": "#e08a3c" }
+    },
+    {
+      "key": "the-wastes",
+      "version": 3,
+      "title": "The Wastes",
+      "type": "Region",
+      "overview": "<p>The Western Wastes: the far western reaches of Suxyland's western continent, cut off from the rest of the mainland by <a class=\"mention\" data-key=\"the-wall\">The Wall</a>. The city of <a class=\"mention\" data-key=\"parniatus\">Parniatus</a> sits on top of the Wall's northwestern stretch.</p>",
+      "secrets": ""
+    },
+    {
+      "key": "the-wall",
+      "version": 1,
+      "title": "The Wall",
+      "type": "Location",
+      "overview": "<p>A sheer wall a mile high that runs north to south across Suxyland's western continent, dividing <a class=\"mention\" data-key=\"the-wastes\">The Wastes</a> from the rest of the mainland.</p><p>The great circular city of <a class=\"mention\" data-key=\"parniatus\">Parniatus</a> is built on top of its northwestern stretch.</p>",
+      "secrets": "",
+      "pin": { "map": "bundled:suxyland", "x": 316, "y": 336, "icon": "🧱", "color": "#8a7650" }
+    }
+  ]
+}

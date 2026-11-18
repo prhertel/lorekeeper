@@ -89,6 +89,23 @@ export async function renderPortrait(p, { demon = false, flip = false, size = 32
   return new Promise((resolve) => c.toBlob(resolve, 'image/webp', 0.9));
 }
 
+/** Square crop of any bundled image (e.g. a player's own character art) as a portrait Blob. */
+export async function renderCrop({ src, x = 0, y = 0, size }, out = 360) {
+  const img = await new Promise((resolve, reject) => {
+    const i = new Image();
+    i.onload = () => resolve(i);
+    i.onerror = () => reject(new Error(`picture missing: ${src}`));
+    i.src = src;
+  });
+  const s = size || Math.min(img.naturalWidth, img.naturalHeight);
+  const c = document.createElement('canvas');
+  c.width = c.height = out;
+  const g = c.getContext('2d');
+  g.imageSmoothingQuality = 'high';
+  g.drawImage(img, x, y, s, s, 0, 0, out, out);
+  return new Promise((resolve) => c.toBlob(resolve, 'image/webp', 0.92));
+}
+
 /** Converted by profane ritual: drained colour, a blood-red cast, darkness creeping in and drifting embers. */
 function demonize(g, size) {
   g.globalCompositeOperation = 'saturation';
@@ -134,6 +151,7 @@ export async function rollPortraitOnto(target) {
     p = PORTRAITS[(PORTRAITS.findIndex((x) => x.id === target.portraitId) + 1) % PORTRAITS.length];
   }
   target.image = await renderPortrait(p, { demon: !!target.portraitDemon, flip: Math.random() < 0.5 });
+  target.imageFromParty = false;
   target.portraitId = p.id;
   return target;
 }

@@ -1,0 +1,21 @@
+{
+  "about": "Extra built-in maps (plain images, restyled to match Suxyland). Each browser imports them once; bump a map's version to push a new image or scale. 'parent' + 'parentPin' adds a pin on that map which opens this one (double-click). Pin x/y are in this image's pixels; parentPin x/y in Azgaar map units. 'entry' links a pin to a built-in World Bible entry by its key.",
+  "maps": [
+    {
+      "key": "western-wastes",
+      "version": 1,
+      "name": "The Western Wastes",
+      "src": "assets/maps/western-wastes.webp",
+      "crop": { "x": 0, "y": 0, "w": 1401, "h": 860 },
+      "style": "grim",
+      "milesPerPx": 0.862,
+      "parent": "bundled:suxyland",
+      "parentPin": { "x": 200, "y": 362, "label": "The Western Wastes", "icon": "🗺️", "color": "#8a7650", "entry": "the-wastes" },
+      "pins": [
+        { "key": "parniatus", "x": 892, "y": 62, "label": "Parniatus", "icon": "🏘️", "color": "#e08a3c", "entry": "parniatus" },
+        { "key": "the-wall", "x": 968, "y": 373, "label": "The Wall", "icon": "🧱", "color": "#8a7650", "entry": "the-wall" },
+        { "key": "akrameama", "x": 477, "y": 372, "label": "Akrameama", "icon": "🏰", "color": "#c4a032", "notes": "Capital of the Western Wastes." }
+      ]
+    }
+  ]
+}

@@ -371,7 +371,7 @@ export function render(root, [eid]) {
       onClick: async () => {
         const f = await pickFile('image/*');
         if (!f) return;
-        if (entry) { entry.image = f; save('entries', entry); }
+        if (entry) { entry.image = f; entry.portraitId = null; entry.imageFromParty = false; save('entries', entry); }
         else { c.image = f; persist(); }
         draw();
       },

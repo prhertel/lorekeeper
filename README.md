@@ -15,6 +15,7 @@ A campaign and world-building tool for tabletop game masters. It runs entirely i
   - Set the map scale, then measure distance and travel time on foot, on horse or by wagon.
   - Nest sub-maps inside pins.
   - **Azgaar's Fantasy Map Generator:** upload a `.map` file and it's repainted in a dark, grim style (black seas, umber land, drained realm colours, blood-red borders, bone labels, vignette and title). The distance scale is read from the file, and pins are added for capitals and the map's points of interest, which are hidden until you tick *Show points of interest*.
+  - **Built-in regional maps:** `assets/maps.json` lists extra map images (like **The Western Wastes**) that are restyled to match Suxyland and set up in every browser, with their own pins, scale, and a pin on Suxyland that opens them.
   - **Default map:** *Set as default map* chooses which map opens first. **Suxyland** (`assets/suxyland.map`) ships with the app and is imported as the default the first time the app opens in a browser.
 - **Campaigns**: campaigns contain arcs, arcs contain sessions, and each session has beats (beat, main encounter, cliffhanger) plus notes. Each session is marked played, current or upcoming.
 - **Combat**: an initiative tracker.
@@ -44,6 +45,7 @@ A campaign and world-building tool for tabletop game masters. It runs entirely i
   - **Portraits:** every generated NPC gets a painted portrait from the library in `assets/portraits/` (16 dark fantasy portraits), matched by race, gender and class. Demons get a blood-red, ember-lit version of the matching portrait. If the library can't load, a simple drawn portrait is used instead. The 🎲 on any World Bible picture or Combat avatar rolls a portrait, so your party can have one too.
     - To add more portraits, put another sheet in `assets/portraits/` and list its tiles (race, class, gender, crop position) in `js/portraits.js`.
   - Re-roll single cards or all of them, then add them to the World Bible, or to the World Bible and the current fight in one click. Combat stats are filled in automatically.
+- **Built-in party and world:** `assets/party.json` (the player characters, with portraits cropped from `assets/portraits/`) and `assets/world.json` (places like Parniatus and The Wastes) are added to every browser's World Bible on first load. Entries can also pin themselves on the Suxyland map. Raise an entry's `version` to push changes to browsers that already have it; DM secrets and pictures players uploaded are kept.
 - **Player view**: a toggle that hides every DM secret, for when you share your screen. In combat, NPC HP shows only as Healthy, Hurt, Bloodied or Down.
 - **Backups**: export everything (images included) to one JSON file, and import it again.
 - **Sample world**: load one from the sidebar to try every feature.

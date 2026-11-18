@@ -158,7 +158,7 @@ function renderDetail(root, id) {
     const f = await pickFile('image/*');
     if (!f) return;
     if (f.size > 8e6) toast('That image is large; it will still work, but backups will be bigger.');
-    e.image = f;
+    e.image = f; e.portraitId = null; e.imageFromParty = false; // the player's own picture
     save('entries', e);
     drawImg();
   }

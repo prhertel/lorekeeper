@@ -1,6 +1,6 @@
 // App shell: sidebar navigation, hash routing, settings and backup.
 import { load, state, save, onChange, setPlayerView, hasData } from './state.js';
-import { h, fill, toast, pickFile, pendingFlushes, ask } from './dom.js';
+import { h, fill, toast, pickFile, pendingFlushes, ask, uid } from './dom.js';
 import * as bible from './bible.js';
 import * as maps from './map.js';
 import * as campaigns from './campaigns.js';
@@ -100,8 +100,146 @@ document.addEventListener('visibilitychange', () => {
   let hadData = hasData();
   onChange(() => { if (hasData() !== hadData) { hadData = hasData(); drawNav(); } });
   route();
-  seedDefaultMap();
+  // The map first, so built-in places can pin themselves onto it.
+  seedDefaultMap()
+    .then(() => seedBundled('assets/party.json', 'characters', 'party member'))
+    .then(() => seedBundled('assets/world.json', 'entries', 'world entry', 'world entries'))
+    .then(resolveKeyLinks)
+    .then(seedBundledMaps);
 })();
+
+/**
+ * Extra built-in maps (assets/maps.json): plain images restyled to match Suxyland, imported once per
+ * browser, with their own pins and an optional pin on a parent map that opens them.
+ */
+async function seedBundledMaps() {
+  let data;
+  try {
+    const res = await fetch('assets/maps.json', { cache: 'no-cache' });
+    if (!res.ok) return;
+    data = await res.json();
+  } catch { return; }
+  const entryByKey = (k) => k && [...state.entries.values()].find((e) => e.partyKey === k);
+  const pinFrom = (p, scale = 1) => ({
+    id: uid(), x: p.x * scale, y: p.y * scale, label: p.label || 'Pin', icon: p.icon || '📍', color: p.color || '#e08a3c',
+    entryId: entryByKey(p.entry)?.id || null, submapId: null, notes: p.notes || '', bundledKey: p.key || null,
+  });
+  let added = 0;
+  for (const def of data.maps || []) {
+    const source = `bundled:${def.key}`;
+    let map = [...state.maps.values()].find((m) => m.source === source);
+    if (map && (map.bundledVersion || 0) >= (def.version || 1)) continue;
+    let img;
+    try {
+      const { grimRasterMap } = await import('./mapstyle.js');
+      img = await grimRasterMap(def.src, { crop: def.crop, title: def.style === 'grim' ? def.name : '' });
+    } catch (e) { console.error(e); continue; }
+    const parent = def.parent && [...state.maps.values()].find((m) => m.source === def.parent);
+    const isNew = !map;
+    map ??= { id: uid(), pins: [], createdAt: Date.now(), source };
+    Object.assign(map, {
+      name: def.name, image: img.blob, width: img.width, height: img.height,
+      milesPerPx: def.milesPerPx ?? map.milesPerPx ?? null, parentId: parent?.id || map.parentId || null, bundledVersion: def.version || 1,
+    });
+    for (const p of def.pins || []) if (!map.pins.some((x) => x.bundledKey === p.key)) map.pins.push(pinFrom(p));
+    save('maps', map);
+    // A pin on the parent map that opens this one.
+    if (parent && def.parentPin && !parent.pins.some((x) => x.submapId === map.id)) {
+      parent.pins.push({ ...pinFrom(def.parentPin, BUNDLED_MAP_SCALE), submapId: map.id });
+      save('maps', parent);
+    }
+    if (isNew) added++;
+  }
+  if (added) toast(`Added ${added} built-in map${added > 1 ? 's' : ''}.`);
+  if (added && currentView === 'map') route();
+}
+
+/**
+ * Built-in entries link to each other with data-key="<key>" (entry IDs differ per browser).
+ * Turn those into real @-mention links once the target entries exist.
+ */
+function resolveKeyLinks() {
+  const byKey = new Map([...state.entries.values()].filter((e) => e.partyKey).map((e) => [e.partyKey, e]));
+  const fix = (html) => html.replace(/<a class="mention" data-key="([^"]+)"([^>]*)>([^<]*)<\/a>/g, (whole, key, rest, text) => {
+    const target = byKey.get(key);
+    return target ? `<a class="mention" data-id="${target.id}" contenteditable="false">${target.title}</a>` : text;
+  });
+  let any = false;
+  for (const e of byKey.values()) {
+    let changed = false;
+    for (const field of ['overview', 'secrets']) {
+      if (e[field]?.includes('data-key=')) { e[field] = fix(e[field]); changed = true; }
+    }
+    if (changed) { save('entries', e); any = true; }
+  }
+  if (any && currentView === 'bible') route(); // show the finished links in an open entry
+}
+
+const BUNDLED_MAP_SCALE = 3; // the bundled map is rendered at 3x its Azgaar size (see azgaar.js)
+
+/**
+ * Built-in World Bible entries ship with the app (assets/party.json, assets/world.json). Each browser
+ * adds them once; a higher `version` pushes updates (stats, write-up, picture) to browsers that
+ * already have them. DM secrets and any picture a player uploaded are kept.
+ */
+async function seedBundled(url, listKey, singular, plural = singular + 's') {
+  let data;
+  try {
+    const res = await fetch(url, { cache: 'no-cache' });
+    if (!res.ok) return;
+    data = await res.json();
+  } catch { return; }
+  const { PORTRAITS, renderPortrait, renderCrop } = await import('./portraits.js');
+  let added = 0, updated = 0;
+  for (const ch of data[listKey] || []) {
+    if (!ch.key || !ch.title) continue;
+    const all = [...state.entries.values()];
+    let e = all.find((x) => x.partyKey === ch.key)
+      || all.find((x) => !x.partyKey && x.title.trim().toLowerCase() === ch.title.trim().toLowerCase());
+    if (e && (e.partyVersion || 0) >= (ch.version || 1)) { placePin(e, ch); continue; }
+    const isNew = !e;
+    e ??= { id: uid(), image: null, secrets: '', createdAt: Date.now() };
+    Object.assign(e, {
+      title: ch.title, type: ch.type || 'Party Member', overview: ch.overview || e.overview || '',
+      secrets: e.secrets || ch.secrets || '', stats: { ...(e.stats || {}), ...(ch.stats || {}) },
+      gen: ch.gen || e.gen, partyKey: ch.key, partyVersion: ch.version || 1,
+    });
+    // Pictures: replace one that came from the bundle or the portrait library, never a player's own upload.
+    const replaceable = !e.image || e.imageFromParty || !!e.portraitId;
+    if (replaceable && ch.image?.src) {
+      try {
+        e.image = await renderCrop(ch.image);
+        e.portraitId = null;
+        e.imageFromParty = true;
+      } catch { /* keep the current picture */ }
+    } else if (!e.image && ch.portraitId) {
+      const p = PORTRAITS.find((x) => x.id === ch.portraitId);
+      if (p) { try { e.image = await renderPortrait(p); e.portraitId = p.id; } catch { /* no picture */ } }
+    }
+    save('entries', e);
+    placePin(e, ch);
+    if (isNew) added++; else updated++;
+  }
+  if (added) toast(`Added ${added} ${added > 1 ? plural : singular} to the World Bible.`);
+  if (updated) toast(`Updated ${updated} ${updated > 1 ? plural : singular}.`);
+  if ((added || updated) && ['bible', 'combat', 'map'].includes(currentView)) route();
+}
+
+/** Put a built-in entry's pin on its bundled map once (if the DM deletes it later, it stays deleted). */
+function placePin(e, ch) {
+  if (!ch.pin || e.pinPlaced) return;
+  const map = [...state.maps.values()].find((m) => m.source === ch.pin.map);
+  if (!map) return; // map not imported yet: try again next load
+  if (!map.pins.some((p) => p.entryId === e.id)) {
+    map.pins.push({
+      id: uid(), x: ch.pin.x * BUNDLED_MAP_SCALE, y: ch.pin.y * BUNDLED_MAP_SCALE, label: ch.title,
+      icon: ch.pin.icon || '📍', color: ch.pin.color || '#e08a3c', entryId: e.id, submapId: null, notes: '',
+    });
+    save('maps', map);
+  }
+  e.pinPlaced = true;
+  save('entries', e);
+}
 
 /** The campaign's world map ships with the app: import it once (restyled) and make it the default. */
 const BUNDLED_MAP = { key: 'lk.seed.suxyland', source: 'bundled:suxyland', url: 'assets/suxyland.map', name: 'Suxyland' };

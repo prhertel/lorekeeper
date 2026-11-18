@@ -1,0 +1,71 @@
+{
+  "about": "Built-in player characters. Each browser adds these to the World Bible as Party Members on first load. Bump a character's version to push changes (level-ups, new HP, a new picture) to browsers that already have them. Pictures: either \"portraitId\" (from the portrait library) or \"image\": { src, x, y, size } (a square crop of a file in assets/portraits/). A picture a player uploaded themselves is never replaced.",
+  "characters": [
+    {
+      "key": "john-farrier",
+      "version": 3,
+      "title": "John Farrier",
+      "type": "Party Member",
+      "gen": { "race": "human", "class": "warlock" },
+      "image": { "src": "assets/portraits/john-farrier.webp", "x": 90, "y": 70, "size": 400 },
+      "stats": { "ac": 12, "maxHp": 33, "initBonus": 4, "speed": "30 ft" },
+      "overview": "<p><strong>Human Warlock 3</strong> · Farrier background</p><h2>Stats</h2><p><strong>AC</strong> 12 · <strong>HP</strong> 33 · <strong>Speed</strong> 30 ft · <strong>Initiative</strong> +4 (Alert) · <strong>Proficiency</strong> +2 · <strong>Passive Perception</strong> 14 · <strong>Hit dice</strong> 3d8</p><p>STR 9 (−1) · DEX 14 (+2) · CON 16 (+3) · INT 10 (+0) · WIS 16 (+3) · CHA 20 (+5)</p><p><strong>Saving throws:</strong> Wisdom, Charisma · <strong>Skills:</strong> History, Deception</p><p><strong>Attacks</strong></p><ul><li>Eldritch Blast: +5 to hit, 1d10 force + Charisma (Agonizing Blast), pushes 10 ft (Repelling Blast)</li><li>Handaxe: +3 to hit, 1d6 + 3 slashing</li></ul><h2>Warlock</h2><ul><li>Pact Magic: 2 slots (2nd level), 2 cantrips, 4 prepared spells</li><li>Invocations (3): Agonizing Blast, Mask of Many Faces (Disguise Self at will, no slot), Repelling Blast</li><li>Patron: Awakened Mind, Psychic Spells</li></ul><h2>Feats</h2><ul><li>Tough</li><li>Alert</li></ul><h2>Proficiencies</h2><p>Light armor · Simple weapons</p>",
+      "secrets": ""
+    },
+    {
+      "key": "thronn",
+      "version": 2,
+      "title": "Thronn",
+      "type": "Party Member",
+      "gen": { "race": "loxodon", "class": "fighter" },
+      "image": { "src": "assets/portraits/thronn.png", "x": 40, "y": 30, "size": 420 },
+      "stats": {},
+      "overview": "<p><strong>Loxodon Fighter 3</strong> · Eldritch Knight</p><p><em>Stats not added yet: waiting on the character sheet.</em></p>",
+      "secrets": ""
+    },
+    {
+      "key": "corvus",
+      "version": 2,
+      "title": "Corvus",
+      "type": "Party Member",
+      "gen": { "race": "kenku", "class": "rogue" },
+      "image": { "src": "assets/portraits/corvus.png", "x": 10, "y": 0, "size": 230 },
+      "stats": {},
+      "overview": "<p><strong>Kenku Rogue 3</strong></p><p><em>Stats not added yet: waiting on the character sheet.</em></p>",
+      "secrets": ""
+    },
+    {
+      "key": "john-acolyte",
+      "version": 2,
+      "title": "John Acolyte",
+      "type": "Party Member",
+      "gen": { "race": "human", "class": "sorcerer" },
+      "image": { "src": "assets/portraits/john-acolyte.png", "x": 50, "y": 40, "size": 240 },
+      "stats": {},
+      "overview": "<p><strong>Human Sorcerer 3</strong></p><p><em>Stats not added yet: waiting on the character sheet.</em></p>",
+      "secrets": ""
+    },
+    {
+      "key": "james-blackman",
+      "version": 2,
+      "title": "James Blackman",
+      "type": "Party Member",
+      "gen": { "race": "human", "class": "wizard" },
+      "image": { "src": "assets/portraits/james-blackman.png", "x": 40, "y": 0, "size": 330 },
+      "stats": {},
+      "overview": "<p><strong>Human Wizard 3</strong></p><p><em>Stats not added yet: waiting on the character sheet.</em></p>",
+      "secrets": ""
+    },
+    {
+      "key": "dirk-baskins",
+      "version": 2,
+      "title": "Dirk Baskins",
+      "type": "Party Member",
+      "gen": { "race": "human", "class": "paladin" },
+      "image": { "src": "assets/portraits/dirk-baskins.png", "x": 25, "y": 0, "size": 240 },
+      "stats": {},
+      "overview": "<p><strong>Human Paladin 3</strong> · Oath of Glory</p><p><em>Stats not added yet: waiting on the character sheet.</em></p>",
+      "secrets": ""
+    }
+  ]
+}
