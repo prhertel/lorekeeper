@@ -1,0 +1,20 @@
+{
+  "name": "Goblin",
+  "ac": [
+    {
+      "ac": 15,
+      "from": [
+        "leather armor",
+        "shield"
+      ]
+    }
+  ],
+  "hp": {
+    "average": 7,
+    "formula": "2d6"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "dex": 14
+}

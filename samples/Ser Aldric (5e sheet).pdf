@@ -1,0 +1,38 @@
+%PDF-1.5
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R /AcroForm << /Fields [10 0 R 11 0 R 12 0 R 13 0 R 14 0 R 15 0 R 16 0 R 17 0 R] >> >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Annots [10 0 R 11 0 R 12 0 R 13 0 R 14 0 R 15 0 R 16 0 R 17 0 R] >>
+endobj
+10 0 obj
+<< /FT /Tx /T (CharacterName) /DA (/Helv 0 Tf 0 g) /MK << /BG [1 1 1] >> /V (Ser Aldric) /Rect [0 0 100 20] /Subtype /Widget /F 4 >>
+endobj
+11 0 obj
+<< /FT /Tx /T (ClassLevel) /DA (/Helv 0 Tf 0 g) /MK << /BG [1 1 1] >> /V (Paladin 5) /Rect [0 0 100 20] /Subtype /Widget /F 4 >>
+endobj
+12 0 obj
+<< /FT /Tx /T (AC) /DA (/Helv 0 Tf 0 g) /MK << /BG [1 1 1] >> /V (18) /Rect [0 0 100 20] /Subtype /Widget /F 4 >>
+endobj
+13 0 obj
+<< /FT /Tx /T (Initiative) /DA (/Helv 0 Tf 0 g) /MK << /BG [1 1 1] >> /V (-1) /Rect [0 0 100 20] /Subtype /Widget /F 4 >>
+endobj
+14 0 obj
+<< /FT /Tx /T (HPMax) /DA (/Helv 0 Tf 0 g) /MK << /BG [1 1 1] >> /V (44) /Rect [0 0 100 20] /Subtype /Widget /F 4 >>
+endobj
+15 0 obj
+<< /FT /Tx /T (HPCurrent) /DA (/Helv 0 Tf 0 g) /MK << /BG [1 1 1] >> /V (44) /Rect [0 0 100 20] /Subtype /Widget /F 4 >>
+endobj
+16 0 obj
+<< /FT /Tx /T (Speed) /DA (/Helv 0 Tf 0 g) /MK << /BG [1 1 1] >> /V (30) /Rect [0 0 100 20] /Subtype /Widget /F 4 >>
+endobj
+17 0 obj
+<< /FT /Tx /T (DEX) /DA (/Helv 0 Tf 0 g) /MK << /BG [1 1 1] >> /V (8) /Rect [0 0 100 20] /Subtype /Widget /F 4 >>
+endobj
+trailer
+<< /Root 1 0 R >>
+%%EOF

@@ -1,0 +1,9 @@
+# Everything else: normalise to LF in the repository
+* text=auto
+
+# Store these byte-for-byte, no line-ending conversion (later rules win, so these come last)
+*.map binary
+*.pdf binary
+*.webp binary
+*.png binary
+*.jpg binary

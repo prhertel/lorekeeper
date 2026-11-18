@@ -1,0 +1,28 @@
+{
+  "name": "Kaela Swiftbrook",
+  "type": "character",
+  "system": {
+    "abilities": {
+      "dex": {
+        "value": 16
+      }
+    },
+    "attributes": {
+      "ac": {
+        "flat": null,
+        "value": 15
+      },
+      "hp": {
+        "value": 30,
+        "max": 33
+      },
+      "init": {
+        "bonus": 1
+      },
+      "movement": {
+        "walk": 35,
+        "units": "ft"
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+# Local tool settings (contain machine-specific paths)
+.claude/
+
+# Python
+__pycache__/
+*.pyc
+
+# OS / editor clutter
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+
+# Built upload folder for Netlify (python publish.py)
+site/
