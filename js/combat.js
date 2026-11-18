@@ -343,7 +343,7 @@ export function render(root, [eid]) {
           field('hp', 'Current HP', 'hp-cur'), h('span', { class: 'muted' }, '/'), field('maxHp', 'Max HP', 'hp-max'),
           h('span', { class: 'temp-wrap', title: 'Temporary HP' }, '+', field('temp', 'Temporary HP', 'hp-temp'), h('small', {}, 'tmp'))),
         c.kind !== 'pc' ? h('span', { class: 'player-only health-word' }, healthWord(c)) : null),
-      c.maxHp ? h('div', { class: 'hp-bar' + (bloodied ? ' bloodied' : '') }, h('div', { style: `width:${pct * 100}%` }),
+      c.maxHp ? h('div', { class: 'hp-bar' + (bloodied ? ' bloodied' : ''), 'data-frame': (c.hp ?? 0) <= 0 ? 7 : Math.min(6, Math.round((1 - pct) * 7)), title: `${c.hp ?? 0} / ${c.maxHp} HP` }, h('div', { style: `width:${pct * 100}%` }),
         c.temp ? h('div', { class: 'temp', style: `width:${Math.min(1, c.temp / c.maxHp) * 100}%` }) : null) : null,
       h('div', { class: 'hp-actions dm-only-for-npc' },
         amt,

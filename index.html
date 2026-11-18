@@ -5,7 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lorekeeper</title>
   <meta name="description" content="Campaign and world-building tool for tabletop game masters.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Pixelify+Sans:wght@400;600&display=swap">
   <link rel="stylesheet" href="css/style.css">
+  <script>
+    // Apply the chosen theme before anything draws (Plain is the default).
+    (function () {
+      var themes = { gilded: 'css/theme-gilded.css', wood: 'css/theme-wood.css' };
+      var t = 'plain';
+      try { t = localStorage.getItem('lk.theme') || 'plain'; } catch (e) { /* storage blocked */ }
+      if (!themes[t]) t = 'plain';
+      document.documentElement.setAttribute('data-theme', t);
+      var link = document.createElement('link');
+      link.id = 'theme-css';
+      link.rel = 'stylesheet';
+      if (themes[t]) link.href = themes[t];
+      document.head.appendChild(link);
+    })();
+  </script>
 </head>
 <body>
   <div id="app">

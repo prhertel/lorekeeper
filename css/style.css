@@ -521,3 +521,7 @@ main { flex: 1; min-width: 0; overflow: hidden; }
 .ask-actions { display: flex; justify-content: flex-end; gap: 8px; }
 .btn.danger-solid { background: #8c1d1d; border-color: #a52a2a; color: #fff; font-weight: 600; }
 .btn.danger-solid:hover { background: #a52a2a; }
+
+/* theme picker */
+.theme-pick { display: flex; align-items: center; gap: 8px; padding: 4px 10px; font-size: .85rem; color: var(--muted); }
+.theme-pick select { width: auto; flex: 1; padding: 3px 6px; font-size: .85rem; }

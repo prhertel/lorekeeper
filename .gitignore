@@ -13,3 +13,6 @@ desktop.ini
 
 # Built upload folder for Netlify (python publish.py)
 site/
+
+# ToffeeCraft "Fantasy UI" pack: licensed for use, NOT for redistribution. Keep it out of the public repo.
+assets/ui/wood/

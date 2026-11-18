@@ -43,6 +43,29 @@ function route() {
   }
 }
 
+// Themes: index.html applies the saved one before the page draws; this switches it live.
+const THEMES = [['plain', 'Plain'], ['wood', 'Wooden (pixel)'], ['gilded', 'Gilded']];
+const THEME_CSS = { gilded: 'css/theme-gilded.css', wood: 'css/theme-wood.css' };
+const currentTheme = () => document.documentElement.getAttribute('data-theme') || 'plain';
+// The Wooden theme uses licensed art that isn't redistributed (it's kept out of the public repo),
+// so only offer it where that art is actually present.
+const THEME_ASSET = { wood: 'assets/ui/wood/frame.png' };
+const themeAvailable = new Map();
+async function checkThemeAssets() {
+  for (const [id, url] of Object.entries(THEME_ASSET)) {
+    try { themeAvailable.set(id, (await fetch(url, { method: 'HEAD', cache: 'no-cache' })).ok); } catch { themeAvailable.set(id, false); }
+  }
+  if (THEME_ASSET[currentTheme()] && !themeAvailable.get(currentTheme())) setTheme('plain'); // saved theme's art is missing here
+  drawNav();
+}
+const themeOffered = (id) => !THEME_ASSET[id] || themeAvailable.get(id) === true;
+function setTheme(id) {
+  const link = document.getElementById('theme-css');
+  if (THEME_CSS[id]) link.setAttribute('href', THEME_CSS[id]); else link.removeAttribute('href');
+  document.documentElement.setAttribute('data-theme', id);
+  try { localStorage.setItem('lk.theme', id); } catch { /* storage blocked */ }
+}
+
 function drawNav() {
   fill(sidebar, 
     h('div', { class: 'brand' }, h('span', { class: 'brand-mark' }, '✦'), 'Lorekeeper'),
@@ -53,6 +76,11 @@ function drawNav() {
         h('input', { type: 'checkbox', checked: state.playerView, onChange: (e) => setPlayerView(e.target.checked) }),
         h('span', { class: 'switch-track' }),
         h('span', { class: 'nav-label' }, 'Player view')),
+      h('label', { class: 'theme-pick', title: 'Look of the app (saved in this browser)' },
+        h('span', { class: 'nav-label' }, 'Theme'),
+        h('select', { 'aria-label': 'Theme', onChange: (e) => setTheme(e.target.value) },
+          THEMES.filter(([id]) => themeOffered(id) || currentTheme() === id)
+            .map(([id, label]) => h('option', { value: id, selected: currentTheme() === id }, label)))),
       !hasData() ? h('button', {
         class: 'btn ghost small', onClick: async () => {
           await loadSample();
@@ -100,6 +128,7 @@ document.addEventListener('visibilitychange', () => {
   let hadData = hasData();
   onChange(() => { if (hasData() !== hadData) { hadData = hasData(); drawNav(); } });
   route();
+  checkThemeAssets();
   // The map first, so built-in places can pin themselves onto it.
   seedDefaultMap()
     .then(() => seedBundled('assets/party.json', 'characters', 'party member'))

@@ -37,7 +37,7 @@ def main():
         src = os.path.join(ROOT, item)
         dst = os.path.join(OUT, item)
         if os.path.isdir(src):
-            shutil.copytree(src, dst, ignore=shutil.ignore_patterns(".*", "__pycache__"))
+            shutil.copytree(src, dst, ignore=shutil.ignore_patterns(".*", "__pycache__", "wood"))  # "wood": licensed UI art, not for redistribution
         else:
             shutil.copy2(src, dst)
     with open(os.path.join(OUT, "_headers"), "w", newline="\n") as f:
