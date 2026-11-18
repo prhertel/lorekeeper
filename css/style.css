@@ -351,10 +351,10 @@ main { flex: 1; min-width: 0; overflow: hidden; }
 .init-cell { display: flex; align-items: center; gap: 2px; }
 .init { width: 58px !important; font-size: 1.2rem; font-weight: 700; text-align: center; padding: 5px 4px !important; }
 .name-cell { min-width: 0; }
-.name-line { display: flex; align-items: center; gap: 8px; }
+.name-line { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 8px; }
 .kind-tag { font-size: .68rem; font-weight: 700; letter-spacing: .05em; padding: 3px 6px; border-radius: 4px; border: 0; cursor: pointer; background: var(--panel3); color: var(--muted); flex: none; }
 .kind-pc .kind-tag { background: #4189cc; color: #fff; }
-.cname { font-weight: 600; font-size: 1.02rem; background: transparent !important; border-color: transparent !important; padding: 3px 4px !important; min-width: 0; }
+.cname { font-weight: 600; font-size: 1.02rem; background: transparent !important; border-color: transparent !important; padding: 3px 4px !important; flex: 1 1 6em; min-width: min(6em, 100%); } /* never squeeze the name to nothing: wrap instead */
 .cname:hover { border-color: var(--line) !important; }
 .entry-link { text-decoration: none; flex: none; }
 .name-line .small { white-space: nowrap; }
